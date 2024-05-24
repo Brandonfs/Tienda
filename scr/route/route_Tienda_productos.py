@@ -27,27 +27,24 @@ def Index():
     data = []
     pagination = None
 
-
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     search_query = request.args.get('q', '')  
 
     if request.method == 'POST':
         pass
 
+    productos = model_Tienda_productos.get_tienda_productos_list_activos()
 
-    nombre = model_Tienda_productos.get_tienda_productos_list_activos(search_query)
-
-
-    for productos in productos:
-        productos_dict = {
-            'productoId': productos.productoId,
-            'nombre': productos.nombre,
-            'descripcion': productos.descripcion,
-            'precio': productos.precio,
-            'stock': productos.stock,
-            'fechaRegistro': productos.fechaRegistro,
+    for producto in productos: 
+        producto_dict = {
+            'productoId': producto.productoId,
+            'nombre': producto.nombre,
+            'descripcion': producto.descripcion,
+            'precio': producto.precio,
+            'stock': producto.stock,
+            'fechaRegistro': producto.fechaRegistro,
         }
-        data.append(productos_dict)
+        data.append(producto_dict)
 
     total = len(data)
     paginated_data = data[offset: offset + per_page]
@@ -56,7 +53,6 @@ def Index():
 
     return render_template('index.html', search_query=search_query,
                            attentions=paginated_data, pagination=pagination)
-
 
 # insert
 @main.route('/insert', methods=['POST'])

@@ -15,7 +15,7 @@ class model_Tienda_productos:
     def get_tienda_productos_list_activos():
         connection = get_connection()
         with connection.cursor() as cursor:
-            SQL_SELECT = "SELECT * FROM productos WHERE ESTADO > '1'"
+            SQL_SELECT = "SELECT * FROM productos WHERE stock > '1'"
             cursor.execute(SQL_SELECT)
             listProductos_ctrl = cursor.fetchall()
 
